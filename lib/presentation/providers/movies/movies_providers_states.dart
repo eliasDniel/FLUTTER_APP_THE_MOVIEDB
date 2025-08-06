@@ -1,8 +1,8 @@
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
-import 'package:app_flutter_the_movie/presentation/providers/movies_provider.dart';
+import 'package:app_flutter_the_movie/presentation/providers/movies/movies_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final movieNowPlayingProvider = StateNotifierProvider<MovieNotifier,List<Movie>>(
+final nowPlayingMovieProvider = StateNotifierProvider<MovieNotifier,List<Movie>>(
   (ref) {
   final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlayingMovies;
 

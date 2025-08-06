@@ -1,4 +1,5 @@
 import 'package:app_flutter_the_movie/presentation/providers/movies/movies_providers_states.dart';
+import 'package:app_flutter_the_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,16 +30,24 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (context, index) {
-        final movie = nowPlayingMovies[index];
-        return ListTile(
-          title: Text(movie.title),
-          subtitle: Text(movie.overview),
-          leading: Image.network(movie.posterPath!,fit: BoxFit.cover,),
-        );
-      },
+    return Column(
+      children: [
+        CustomAppbar(),
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.only(top: 0),
+            itemCount: nowPlayingMovies.length,
+            itemBuilder: (context, index) {
+              final movie = nowPlayingMovies[index];
+              return ListTile(
+                title: Text(movie.title),
+                subtitle: Text(movie.overview),
+                leading: Image.network(movie.posterPath!,fit: BoxFit.cover,),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

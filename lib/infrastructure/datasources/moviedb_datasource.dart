@@ -2,7 +2,7 @@ import 'package:app_flutter_the_movie/domain/datasources/movies_datasources.dart
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
 import 'package:dio/dio.dart';
 
-import '../config/constants/environment.dart';
+import '../../config/constants/environment.dart';
 
 class MoviedbDatasource extends MoviesDataSource {
   final dio = Dio(

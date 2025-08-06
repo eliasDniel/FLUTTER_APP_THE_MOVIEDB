@@ -1,8 +1,10 @@
 import 'package:app_flutter_the_movie/domain/datasources/movies_datasources.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
+import 'package:app_flutter_the_movie/infrastructure/models/moviedb/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
 import '../../config/constants/environment.dart';
+import '../mappers/movie_mapper.dart';
 
 class MoviedbDatasource extends MoviesDataSource {
   final dio = Dio(
@@ -15,7 +17,10 @@ class MoviedbDatasource extends MoviesDataSource {
   @override
   Future<List<Movie>> getNowPlayingMovies({int page = 1}) async {
     final response = await dio.get('/movie/now_playing');
-    final List<Movie> movies = [];
+    final movieResponse = MovieDbResponse.fromJson(response.data);
+    final List<Movie> movies = movieResponse.results
+    .where((moviedb) => moviedb.posterPath != 'no-poster')
+    .map((result) => MovieMapper.fromMovieTheMovieDb(result)).toList();
     return movies;
   }
 

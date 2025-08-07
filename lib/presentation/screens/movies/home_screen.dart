@@ -30,11 +30,17 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   void initState() {
     super.initState();
     ref.read(nowPlayingMovieProvider.notifier).loadNextPage();
+    ref.read(moviesUpcomingProvider.notifier).loadNextPage();
+    ref.read(moviesPopularProvider.notifier).loadNextPage();
+    ref.read(moviesTopRatedProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
+    final popularMovies = ref.watch(moviesPopularProvider);
+    final upcomingMovies = ref.watch(moviesUpcomingProvider);
+    final topRatedMovies = ref.watch(moviesTopRatedProvider);
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
     return CustomScrollView(
       slivers: [
@@ -73,30 +79,30 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 ),
 
                 MoviesHorizontalListview(
-                  title: 'En cines',
-                  subtitle: '20 En cines',
+                  title: 'Proximamente',
+                  // subtitle: '20 Populares',
                   loadnextPage: ref
-                      .read(nowPlayingMovieProvider.notifier)
+                      .read(moviesUpcomingProvider.notifier)
                       .loadNextPage,
-                  movies: nowPlayingMovies,
+                  movies: upcomingMovies,
                 ),
                 MoviesHorizontalListview(
-                  title: 'En cines',
-                  subtitle: '20 En cines',
+                  title: 'Populares',
+                  // subtitle: '20 Populares',
                   loadnextPage: ref
-                      .read(nowPlayingMovieProvider.notifier)
+                      .read(moviesPopularProvider.notifier)
                       .loadNextPage,
-                  movies: nowPlayingMovies,
+                  movies: popularMovies,
                 ),
+
                 MoviesHorizontalListview(
-                  title: 'En cines',
-                  subtitle: '20 En cines',
+                  title: 'Mejor Calificadas',
+                  // subtitle: '20 Populares',
                   loadnextPage: ref
-                      .read(nowPlayingMovieProvider.notifier)
+                      .read(moviesTopRatedProvider.notifier)
                       .loadNextPage,
-                  movies: nowPlayingMovies,
-                ),
-                SizedBox(height: 20),
+                  movies: topRatedMovies,
+                )
               ],
             );
           }, childCount: 1),

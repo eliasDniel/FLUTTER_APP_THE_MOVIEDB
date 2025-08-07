@@ -45,7 +45,7 @@ class _MoviesHorizontalListviewState extends State<MoviesHorizontalListview> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 360,
+      height: 350,
       child: Column(
         children: [
           if (widget.title != null || widget.subtitle != null)
@@ -77,21 +77,32 @@ class _Slide extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0,vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           //* IMAGEN
           SizedBox(
             width: 150,
             child: ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(20),
+              borderRadius: BorderRadius.circular(
+                20,
+              ), // Usa BorderRadius directamente
               child: Image.network(
                 movie.posterPath!,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return FadeIn(child: child);
-                  return Center(child: CircularProgressIndicator());
+
+                  return Container(
+                    width: double.infinity,
+                    height: 225, // Altura aproximada del póster
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300], // Color de "hueso"
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  );
                 },
               ),
             ),
@@ -102,7 +113,7 @@ class _Slide extends StatelessWidget {
             width: 150,
             child: Text(
               movie.title,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: textStyle.titleSmall,
             ),

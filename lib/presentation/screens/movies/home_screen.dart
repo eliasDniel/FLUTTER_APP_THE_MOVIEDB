@@ -37,11 +37,18 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final initialLoading = ref.watch(initialLoadingProvider);
+
+    if (initialLoading) {
+      return const FullScreenLoader();
+    }
+
     final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
     final popularMovies = ref.watch(moviesPopularProvider);
     final upcomingMovies = ref.watch(moviesUpcomingProvider);
     final topRatedMovies = ref.watch(moviesTopRatedProvider);
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -102,7 +109,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                       .read(moviesTopRatedProvider.notifier)
                       .loadNextPage,
                   movies: topRatedMovies,
-                )
+                ),
               ],
             );
           }, childCount: 1),

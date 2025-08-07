@@ -27,7 +27,7 @@ class MoviesSlideShow extends StatelessWidget {
         itemCount: movies.length,
         itemBuilder: (BuildContext context, int index) {
           final movie = movies[index];
-          return _SlideMovie(movie: movie);
+          return FadeInRight(child: _SlideMovie(movie: movie));
         },
         // layout: SwiperLayout.STACK,
         // itemWidth: 300,

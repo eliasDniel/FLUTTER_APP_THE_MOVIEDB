@@ -77,7 +77,7 @@ class _Slide extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: EdgeInsets.symmetric(horizontal: 8.0,vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -102,7 +102,7 @@ class _Slide extends StatelessWidget {
             width: 150,
             child: Text(
               movie.title,
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: textStyle.titleSmall,
             ),

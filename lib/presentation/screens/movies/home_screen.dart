@@ -1,4 +1,4 @@
-import 'package:app_flutter_the_movie/presentation/providers/movies/movies_providers_states.dart';
+import 'package:app_flutter_the_movie/presentation/providers/providers.dart';
 import 'package:app_flutter_the_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,11 +29,12 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
+    // final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
+    final moviesSlideShow = ref.watch(moviesSlideShowProvider);
     return Column(
       children: [
         CustomAppbar(),
-        MoviesSlideShow(movies: nowPlayingMovies),
+        MoviesSlideShow(movies: moviesSlideShow),
       ],
     );
   }

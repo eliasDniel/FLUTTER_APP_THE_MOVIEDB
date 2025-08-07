@@ -8,26 +8,29 @@ class CustomAppbar extends StatelessWidget {
     final colorStyle = Theme.of(context).colorScheme;
     return SafeArea(
       bottom: false,
-      child: Padding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-        child: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.movie_outlined, color: colorStyle.primary),
-              onPressed: () {
-                // Handle menu button press
-              },
-            ),
-            SizedBox(width: 5,),
-            Text('EK FilmApp', style: Theme.of(context).textTheme.titleMedium),
-            Spacer(),
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                // Handle search button press
-              },
-            ),
-          ],
+      child: Container(
+        color: Colors.red,
+        child: SizedBox(
+          width: double.infinity,
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.movie_outlined, color: colorStyle.primary),
+                onPressed: () {
+                  // Handle menu button press
+                },
+              ),
+              SizedBox(width: 5,),
+              Text('EK FilmApp', style: Theme.of(context).textTheme.titleMedium),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  // Handle search button press
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -36,15 +36,70 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
-    return Column(
-      children: [
-        CustomAppbar(),
-        MoviesSlideShow(movies: moviesSlideShow),
-        MoviesHorizontalListview(
-          title: 'En cines',
-          subtitle: '20 En cines',
-          loadnextPage: ref.read(nowPlayingMovieProvider.notifier).loadNextPage,
-          movies: nowPlayingMovies,
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          leading: Icon(Icons.movie_outlined),
+          floating: true,
+          title: Text(
+            'EK FilmApp',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                // Handle search button press
+              },
+            ),
+          ],
+          // flexibleSpace: const FlexibleSpaceBar(
+          //   title: CustomAppbar()),
+        ),
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            return Column(
+              children: [
+                // CustomAppbar(),
+                MoviesSlideShow(movies: moviesSlideShow),
+                MoviesHorizontalListview(
+                  title: 'En cines',
+                  subtitle: '20 En cines',
+                  loadnextPage: ref
+                      .read(nowPlayingMovieProvider.notifier)
+                      .loadNextPage,
+                  movies: nowPlayingMovies,
+                ),
+
+                MoviesHorizontalListview(
+                  title: 'En cines',
+                  subtitle: '20 En cines',
+                  loadnextPage: ref
+                      .read(nowPlayingMovieProvider.notifier)
+                      .loadNextPage,
+                  movies: nowPlayingMovies,
+                ),
+                MoviesHorizontalListview(
+                  title: 'En cines',
+                  subtitle: '20 En cines',
+                  loadnextPage: ref
+                      .read(nowPlayingMovieProvider.notifier)
+                      .loadNextPage,
+                  movies: nowPlayingMovies,
+                ),
+                MoviesHorizontalListview(
+                  title: 'En cines',
+                  subtitle: '20 En cines',
+                  loadnextPage: ref
+                      .read(nowPlayingMovieProvider.notifier)
+                      .loadNextPage,
+                  movies: nowPlayingMovies,
+                ),
+                SizedBox(height: 20),
+              ],
+            );
+          }, childCount: 1),
         ),
       ],
     );

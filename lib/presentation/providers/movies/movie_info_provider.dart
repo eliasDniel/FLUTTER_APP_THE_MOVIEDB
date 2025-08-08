@@ -20,7 +20,10 @@ class MovieInfoNotifier extends StateNotifier<Map<String, Movie>> {
     if (isLoading) return;
     isLoading = true;
 
-    if (state[id] != null) return;
+    if (state[id] != null) {
+      isLoading = false;
+      return;
+    }
 
     final movie = await getMovie(id);
     state = {...state, id: movie};

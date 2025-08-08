@@ -42,7 +42,91 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     }
 
     return Scaffold(
-      body: CustomScrollView(slivers: [CustomSliverAppbar(movie: movie)]),
+      body: CustomScrollView(
+        physics: ClampingScrollPhysics(),
+        slivers: [
+          CustomSliverAppbar(movie: movie),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                // Build your list items here
+                return _MovieDetails(movie: movie);
+              },
+              childCount: 1, // Number of items in the list
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MovieDetails extends StatelessWidget {
+  final Movie movie;
+  const _MovieDetails({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final textStyle = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // * IMAGEN
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  movie.posterPath!,
+                  width: size.width * 0.3,
+                ),
+              ),
+              const SizedBox(width: 10),
+
+              // * TITULO
+              SizedBox(
+                width: (size.width - 40) * 0.7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(movie.title, style: textStyle.titleLarge),
+                    Text(movie.overview),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        // * CATEGORIAS
+        Padding(
+          padding: EdgeInsetsGeometry.all(8),
+          child: Wrap(
+            children: [
+              ...movie.genreIds.map((genre) {
+                return Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: Chip(
+                    label: Text(genre),
+                    backgroundColor: Colors.grey[200],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+
+        // * ACTORES
+        
+        SizedBox(height: 100),
+      ],
     );
   }
 }

@@ -38,17 +38,17 @@ final _navBarItems = [
   SalomonBottomBarItem(
     icon: Icon(Icons.whatshot),
     title: const Text("Populares"),
-    selectedColor: Colors.blueAccent,
+    selectedColor: Colors.red,
   ),
   SalomonBottomBarItem(
     icon: const Icon(Icons.favorite),
     title: const Text("Favoritos"),
-    selectedColor: Colors.lightBlue,
+    selectedColor: Colors.amber,
   ),
   SalomonBottomBarItem(
     icon: const Icon(Icons.person),
     title: const Text("Perfil"),
-    selectedColor: Colors.indigo,
+    selectedColor: Colors.purple,
   ),
 ];
 // ...existing code...

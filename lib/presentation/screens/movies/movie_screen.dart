@@ -141,7 +141,7 @@ class _ActorsByMovie extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final actorsByMovie = ref.read(actorsByMovieProvider);
+    final actorsByMovie = ref.watch(actorsByMovieProvider);
     if (actorsByMovie[movieId] == null) {
       return Center(child: CircularProgressIndicator());
     }

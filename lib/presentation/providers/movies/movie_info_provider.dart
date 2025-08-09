@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'movies_provider.dart';
 
+
+// * PROVIDER PARA TRAER UNA SOLA PELICULA Y GUARDAR EN CACHE
 final movieInfoProvider = StateNotifierProvider<MovieInfoNotifier, Map<String, Movie>>((ref) {
   final getMovie = ref.watch(movieRepositoryProvider).getMovieById;
   return MovieInfoNotifier(getMovie: getMovie);

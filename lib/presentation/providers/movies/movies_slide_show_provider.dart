@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'movies_providers_states.dart';
 
+// * INSTANCIA DE MI PROVIER DE PELICULAS PARA TRAER SOLO LAS 6 PRIMERAS
 final moviesSlideShowProvider = Provider<List<Movie>>((ref) {
   final nowPlayingMovies = ref.watch(nowPlayingMovieProvider);
   if (nowPlayingMovies.isEmpty)return [];

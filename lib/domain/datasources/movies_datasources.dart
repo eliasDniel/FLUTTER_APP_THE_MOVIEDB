@@ -5,9 +5,9 @@ abstract class MoviesDataSource {
   Future<List<Movie>> getPopularMovies({int page = 1});
   Future<List<Movie>> getUpcomming({int page = 1});
   Future<List<Movie>> getToRated({int page = 1});
-
-
-
   // * PELICULA POR ID
   Future<Movie> getMovieById(String id);
+
+    // * BUSCAR PELICULAS
+  Future<List<Movie>> searchMovie(String query);
 }

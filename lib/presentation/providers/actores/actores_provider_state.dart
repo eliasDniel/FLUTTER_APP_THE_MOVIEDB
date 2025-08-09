@@ -2,6 +2,8 @@ import 'package:app_flutter_the_movie/domain/entities/actor.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// * PROVIDER PARA TRAER LOS ACTORES
+
 final actorsByMovieProvider =
     StateNotifierProvider<ActorNotifier, Map<String, List<Actor>>>((ref) {
       final getActores = ref.watch(actorsRepositoryProvider).getCredits;

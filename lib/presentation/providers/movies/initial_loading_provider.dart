@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers.dart';
-
+// * PROVIDER INICIAL LOADING
 final initialLoadingProvider = Provider<bool>((ref) {
   final step1 = ref.watch(nowPlayingMovieProvider).isEmpty;
   final step2 = ref.watch(moviesPopularProvider).isEmpty;

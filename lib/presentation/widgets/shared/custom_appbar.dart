@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../delegates/search_movie_delagate.dart';
+
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({super.key});
 
@@ -16,17 +18,19 @@ class CustomAppbar extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.movie_outlined, color: colorStyle.primary),
-                onPressed: () {
-                  // Handle menu button press
-                },
+                onPressed: () {},
               ),
-              SizedBox(width: 5,),
-              Text('EK FilmApp', style: Theme.of(context).textTheme.titleMedium),
+              SizedBox(width: 5),
+              Text(
+                'EK FilmApp',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               Spacer(),
               IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
                   // Handle search button press
+                  showSearch(context: context, delegate: SearchMovieDelagate());
                 },
               ),
             ],

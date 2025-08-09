@@ -3,6 +3,7 @@ import 'package:app_flutter_the_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../delegates/search_movie_delagate.dart';
 import '../../widgets/shared/custom_bottom_navigator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -63,6 +64,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
               icon: Icon(Icons.search),
               onPressed: () {
                 // Handle search button press
+                showSearch(context: context, delegate: SearchMovieDelagate());
               },
             ),
           ],

@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entities/movie.dart';
 
+typedef SearchMoviesCallback = Future<List<Movie>> Function(String query);
+
 class SearchMovieDelagate extends SearchDelegate<Movie?> {
+  final SearchMoviesCallback searchMoviesCallback;
+
+  SearchMovieDelagate(this.searchMoviesCallback);
+
   @override
   String get searchFieldLabel => 'Buscar pelicula';
 
@@ -36,6 +42,19 @@ class SearchMovieDelagate extends SearchDelegate<Movie?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text('Builts Suggestions');
+    return FutureBuilder(
+      future: searchMoviesCallback(query),
+      builder: (context, snapshot) {
+        final movies = snapshot.data ?? [];
+
+        return ListView.builder(
+          itemCount: movies.length,
+          itemBuilder: (context, index) {
+            final movie = movies[index];
+            return ListTile(title: Text(movie.title));
+          },
+        );
+      },
+    );
   }
 }

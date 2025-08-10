@@ -1,10 +1,14 @@
 import 'package:app_flutter_the_movie/presentation/providers/providers.dart';
+import 'package:app_flutter_the_movie/presentation/screens/screens.dart';
 import 'package:app_flutter_the_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../domain/entities/movie.dart';
 import '../../delegates/search_movie_delagate.dart';
 import '../../widgets/shared/custom_bottom_navigator.dart';
+import '../../widgets/shared/custom_sliver_appbar.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String name = 'home';
@@ -52,29 +56,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          leading: Icon(Icons.movie_outlined),
-          floating: true,
-          title: Text(
-            'EK FilmApp',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                final searchRepository = ref.read(movieRepositoryProvider);
-                // Handle search button press
-                showSearch(
-                  context: context,
-                  delegate: SearchMovieDelagate(searchRepository.searchMovie),
-                );
-              },
-            ),
-          ],
-          // flexibleSpace: const FlexibleSpaceBar(
-          //   title: CustomAppbar()),
-        ),
+        CustomSliverAppbar2(ref: ref,),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
@@ -124,3 +106,5 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     );
   }
 }
+
+

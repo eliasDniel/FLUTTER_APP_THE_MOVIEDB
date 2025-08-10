@@ -19,7 +19,7 @@ class MovieMapper {
       overview: movie.overview,
       posterPath: movie.posterPath != '' 
       ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
-      : 'no-poster',
+      : 'https://previews.123rf.com/images/tkacchuk/tkacchuk2004/tkacchuk200400017/143745488-no-picture-icon-editable-line-vector-no-image-no-photo-available-or-no-picture-for-your-website.jpg',
       backdropPath: movie.backdropPath != '' 
       ? 'https://image.tmdb.org/t/p/w500${movie.backdropPath}'
       : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',

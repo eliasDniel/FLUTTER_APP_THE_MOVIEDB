@@ -39,13 +39,13 @@ class MovieTheMovieDb {
         originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"] ?? '',
-        popularity: json["popularity"]?.toDouble(),
+        popularity: json["popularity"]?.toDouble() ?? 0,
         posterPath: json["poster_path"] ?? '',
         releaseDate: DateTime.parse(json["release_date"]),
         title: json["title"] ?? '',
         video: json["video"] ?? false,
-        voteAverage: json["vote_average"]?.toDouble(),
-        voteCount: json["vote_count"],
+        voteAverage: json["vote_average"]?.toDouble() ?? false,
+        voteCount: json["vote_count"] ?? 0,
     );
 
     Map<String, dynamic> toJson() => {

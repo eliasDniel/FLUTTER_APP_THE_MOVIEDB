@@ -1,3 +1,4 @@
+import 'package:app_flutter_the_movie/presentation/screens/views/profile_view.dart';
 import 'package:app_flutter_the_movie/presentation/screens/views/views.dart';
 import 'package:flutter/material.dart';
 import '../widgets/shared/custom_bottom_navigator.dart';
@@ -9,9 +10,9 @@ class HomeScreen extends StatelessWidget {
 
   final viewsPages = const <Widget>[
     HomeView(),
+    CategoriesView(),
     FavoritesView(),
-    CategoriesView(),
-    CategoriesView(),
+    ProfileView(),
   ];
 
   @override

@@ -1,15 +1,14 @@
 import 'package:app_flutter_the_movie/presentation/screens/screens.dart';
 import 'package:go_router/go_router.dart';
 
-
-
 final appRouter = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/home/0',
   routes: [
     GoRoute(
-      path: '/home',
+      path: '/home/:page',
       builder: (context, state) {
-        return const HomeScreen();
+        final pageIndex = int.parse(state.pathParameters['page'] ?? '0');
+        return HomeScreen(pageIndex: pageIndex);
       },
       routes: [
         GoRoute(
@@ -22,5 +21,10 @@ final appRouter = GoRouter(
       ],
     ),
     // Define your app routes here
+    GoRoute(
+      path: '/',
+      redirect: (_, __) => '/home/0',
+    )
+
   ],
 );

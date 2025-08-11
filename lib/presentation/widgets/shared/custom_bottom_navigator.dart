@@ -1,31 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class CustomBottomNavigator extends StatefulWidget {
-  const CustomBottomNavigator({super.key});
+  final int currentIndex;
+  const CustomBottomNavigator({super.key, required this.currentIndex});
 
   @override
   State<CustomBottomNavigator> createState() => _CustomBottomNavigatorState();
 }
 
 class _CustomBottomNavigatorState extends State<CustomBottomNavigator> {
-  int _selectedIndex = 0;
+  void onItemTapped(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        context.go('/home/0');
+        break;
+      case 1:
+        context.go('/home/1');
+        break;
+      case 2:
+        context.go('/home/2');
+        break;
+      case 3:
+        context.go('/home/3');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SalomonBottomBar(
-      currentIndex: _selectedIndex,
+      currentIndex: widget.currentIndex,
       selectedItemColor: const Color(0xff6200ee),
       unselectedItemColor: const Color(0xff757575),
       onTap: (index) {
-        setState(() {
-          _selectedIndex = index;
-        });
+        onItemTapped(context, index);
       },
+
       items: _navBarItems,
     );
   }
 }
-
 
 // ...existing code...
 

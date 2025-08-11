@@ -35,7 +35,7 @@ class CustomSliverAppbar2 extends StatelessWidget {
             ).then((movie) {
               if (movie == null) return;
               if (context.mounted) {
-                context.push('/home/movie/${movie.id}');
+                context.push('/home/0/movie/${movie.id}');
               }
             });
           },

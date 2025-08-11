@@ -1,36 +1,19 @@
-import 'package:app_flutter_the_movie/presentation/providers/providers.dart';
-import 'package:app_flutter_the_movie/presentation/screens/screens.dart';
-import 'package:app_flutter_the_movie/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../../domain/entities/movie.dart';
-import '../../delegates/search_movie_delagate.dart';
-import '../../widgets/shared/custom_bottom_navigator.dart';
+import '../../providers/providers.dart';
+import '../../widgets/movies/movies_horizontal_listview.dart';
+import '../../widgets/movies/movies_slide_show.dart';
 import '../../widgets/shared/custom_sliver_appbar.dart';
+import '../../widgets/shared/full_screen_loader.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const String name = 'home';
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _HomeView(),
-      bottomNavigationBar: const CustomBottomNavigator(),
-    );
-  }
-}
-
-class _HomeView extends ConsumerStatefulWidget {
-  const _HomeView();
+class HomeView extends ConsumerStatefulWidget {
+  const HomeView({super.key});
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  HomeViewState createState() => HomeViewState();
 }
 
-class _HomeViewState extends ConsumerState<_HomeView> {
+class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
@@ -56,7 +39,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     return CustomScrollView(
       slivers: [
-        CustomSliverAppbar2(ref: ref,),
+        CustomSliverAppbar2(ref: ref),
 
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
@@ -106,5 +89,3 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     );
   }
 }
-
-

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider_state.dart';
 import 'package:app_flutter_the_movie/presentation/providers/movies/movie_info_provider.dart';
+import 'package:app_flutter_the_movie/presentation/providers/storage/local_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -184,12 +185,12 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-class CustomSliverAppbar extends StatelessWidget {
+class CustomSliverAppbar extends ConsumerWidget {
   final Movie movie;
   const CustomSliverAppbar({super.key, required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
       centerTitle: false,
@@ -199,7 +200,7 @@ class CustomSliverAppbar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            // TODO: AQUI SE DEBE REALIZAR EL TOOGLE
+            ref.read(localStorageProvider).toogleFavorite(movie);
           },
           icon: Icon(Icons.favorite_border_rounded),
           // icon: Icon(Icons.favorite_rounded, color: Colors.red,),

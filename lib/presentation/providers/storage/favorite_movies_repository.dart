@@ -13,13 +13,14 @@ final favoriotesMoviesProvider =
 
 class FavoriteMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   int page = 0;
-  int limit = 10;
+  int limit = 20;
   final LocalStorageRepoository localStorageRepository;
   FavoriteMoviesNotifier({required this.localStorageRepository}) : super({});
 
-  Future<void> loadNextPage() async {
+  Future<List<Movie>> loadNextPage() async {
     final movies = await localStorageRepository.loadMovies(
       offset: page * limit,
+      limit: limit,
     );
     page++;
     final Map<int, Movie> moviesMemory = {};
@@ -27,5 +28,16 @@ class FavoriteMoviesNotifier extends StateNotifier<Map<int, Movie>> {
       moviesMemory[movie.id] = movie;
     }
     state = {...state, ...moviesMemory};
+    return movies;
+  }
+
+  Future<void> toogleFavorite(Movie movie) async {
+    final isFavorite = await localStorageRepository.toogleFavorite(movie);
+    if (isFavorite) {
+      state.remove(movie.id);
+      state = {...state};
+    } else {
+      state = {...state, movie.id: movie};
+    }
   }
 }

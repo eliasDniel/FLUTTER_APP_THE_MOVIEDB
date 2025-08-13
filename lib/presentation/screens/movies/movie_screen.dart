@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:app_flutter_the_movie/infrastructure/repositories/local_storage_repository_impl.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider_state.dart';
 import 'package:app_flutter_the_movie/presentation/providers/movies/movie_info_provider.dart';
+import 'package:app_flutter_the_movie/presentation/providers/storage/favorite_movies_repository.dart';
 import 'package:app_flutter_the_movie/presentation/providers/storage/local_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -209,8 +210,10 @@ class CustomSliverAppbar extends ConsumerWidget {
       expandedHeight: size.height * 0.7,
       actions: [
         IconButton(
-          onPressed: () async{
-            await ref.read(localStorageProvider).toogleFavorite(movie);
+          onPressed: () async {
+            await ref
+                .read(favoriotesMoviesProvider.notifier)
+                .toogleFavorite(movie);
             ref.invalidate(isFavoriteRepositoryProvider(movie.id));
           },
           icon: isFvavoriteFuture.when(

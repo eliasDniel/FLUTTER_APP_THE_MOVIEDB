@@ -1,54 +1,44 @@
 import 'package:app_flutter_the_movie/domain/datasources/local_storage_datasource.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive/hive.dart';
 
-class IsarDatasource extends LocalStorageDatasource {
-  late Future<Isar> db;
-  IsarDatasource() {
-    db = openDb();
+class HiveDatasource extends LocalStorageDatasource {
+  late Box<Movie> movieBox;
+
+  HiveDatasource() {
+    openBox();
   }
 
-  Future<Isar> openDb() async {
-    if (Isar.instanceNames.isEmpty) {
-      final dir = await getApplicationDocumentsDirectory();
-      return await Isar.open([MovieSchema], directory: dir.path);
-    }
-    return Future.value(Isar.getInstance());
+  Future<void> openBox() async {
+    movieBox = await Hive.openBox<Movie>('movies');
   }
 
   @override
   Future<bool> isFavorite(int movieId) async {
-    final isar = await db;
-
-    final Movie? isFavoriteMovie = await isar.movies
-        .filter()
-        .idEqualTo(movieId)
-        .findFirst();
-    return isFavoriteMovie != null;
+    await openBox();
+    return movieBox.values.any((movie) => movie.id == movieId);
   }
 
   @override
   Future<List<Movie>> loadMovies({int limit = 10, int offset = 0}) async {
-    final isar = await db;
-
-    return isar.movies.where().offset(offset).limit(limit).findAll();
+    await openBox();
+    final movies = movieBox.values.toList();
+    return movies.skip(offset).take(limit).toList();
   }
 
   @override
   Future<bool> toogleFavorite(Movie movie) async {
-    final isar = await db;
-    final isFavoriteMovie = await isar.movies
-        .filter()
-        .idEqualTo(movie.id)
-        .findFirst();
-    if (isFavoriteMovie != null) {
-      // * BORAR LA PELICULA SI LA ENCONTRO
-      isar.writeTxnSync(() => isar.movies.deleteSync(isFavoriteMovie.isarId!));
+    await openBox();
+    final existingKey = movieBox.keys.firstWhere(
+      (key) => movieBox.get(key)?.id == movie.id,
+      orElse: () => null,
+    );
+    if (existingKey != null) {
+      await movieBox.delete(existingKey);
       return true;
+    } else {
+      await movieBox.add(movie);
+      return false;
     }
-    // * INSERTAR LA PELICULA
-    isar.writeTxnSync(() => isar.movies.putSync(movie));
-   return false;
   }
 }

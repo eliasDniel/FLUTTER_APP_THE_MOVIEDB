@@ -3,7 +3,7 @@ import 'package:app_flutter_the_movie/infrastructure/repositories/local_storage_
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final localStorageProvider = Provider((ref) {
-  return LocalStorageRepositoryImpl(datasource: IsarDatasource());
+  return LocalStorageRepositoryImpl(datasource: HiveDatasource());
 });
 
 

@@ -1,23 +1,50 @@
-import 'package:isar/isar.dart';
+import 'package:hive/hive.dart';
+
 part 'movie.g.dart';
 
-@collection
-class Movie {
-  Id? isarId;
-  final bool adult;
-  final String? backdropPath;
-  final List<String> genreIds;
-  final int id;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String? posterPath;
-  final DateTime releaseDate;
-  final String title;
-  final bool video;
-  final double voteAverage;
-  final int voteCount;
+@HiveType(typeId: 1)
+class Movie extends HiveObject {
+  @HiveField(0)
+  bool adult;
+
+  @HiveField(1)
+  String? backdropPath;
+
+  @HiveField(2)
+  List<String> genreIds;
+
+  @HiveField(3)
+  int id;
+
+  @HiveField(4)
+  String originalLanguage;
+
+  @HiveField(5)
+  String originalTitle;
+
+  @HiveField(6)
+  String overview;
+
+  @HiveField(7)
+  double popularity;
+
+  @HiveField(8)
+  String? posterPath;
+
+  @HiveField(9)
+  DateTime releaseDate;
+
+  @HiveField(10)
+  String title;
+
+  @HiveField(11)
+  bool video;
+
+  @HiveField(12)
+  double voteAverage;
+
+  @HiveField(13)
+  int voteCount;
 
   Movie({
     required this.adult,

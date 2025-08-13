@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:app_flutter_the_movie/infrastructure/repositories/local_storage_repository_impl.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider_state.dart';
 import 'package:app_flutter_the_movie/presentation/providers/movies/movie_info_provider.dart';
 import 'package:app_flutter_the_movie/presentation/providers/storage/local_storage_provider.dart';
@@ -185,12 +186,21 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
+final isFavoriteRepositoryProvider = FutureProvider.family.autoDispose((
+  ref,
+  int movieId,
+) {
+  final localStorageRepository = ref.watch(localStorageProvider);
+  return localStorageRepository.datasource.isFavorite(movieId);
+});
+
 class CustomSliverAppbar extends ConsumerWidget {
   final Movie movie;
   const CustomSliverAppbar({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isFvavoriteFuture = ref.watch(isFavoriteRepositoryProvider(movie.id));
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
       centerTitle: false,
@@ -199,10 +209,19 @@ class CustomSliverAppbar extends ConsumerWidget {
       expandedHeight: size.height * 0.7,
       actions: [
         IconButton(
-          onPressed: () {
-            ref.read(localStorageProvider).toogleFavorite(movie);
+          onPressed: () async{
+            await ref.read(localStorageProvider).toogleFavorite(movie);
+            ref.invalidate(isFavoriteRepositoryProvider(movie.id));
           },
-          icon: Icon(Icons.favorite_border_rounded),
+          icon: isFvavoriteFuture.when(
+            data: (isFvorite) => isFvorite
+                ? Icon(Icons.favorite_rounded, color: Colors.red)
+                : Icon(Icons.favorite_border_rounded),
+            error: (_, __) => throw UnimplementedError(),
+            loading: () => CircularProgressIndicator(),
+          ),
+
+          // Icon(Icons.favorite_border_rounded),
           // icon: Icon(Icons.favorite_rounded, color: Colors.red,),
         ),
       ],

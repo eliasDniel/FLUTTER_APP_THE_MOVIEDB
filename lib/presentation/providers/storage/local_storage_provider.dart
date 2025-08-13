@@ -5,3 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final localStorageProvider = Provider((ref) {
   return LocalStorageRepositoryImpl(datasource: IsarDatasource());
 });
+
+
+
+
+
+

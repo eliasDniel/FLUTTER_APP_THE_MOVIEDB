@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:app_flutter_the_movie/config/helpers/human_formats.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
@@ -90,26 +89,14 @@ class _Slide extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                 20,
               ), // Usa BorderRadius directamente
-              child: Image.network(
-                movie.posterPath!,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return GestureDetector(
-                      onTap: () => context.push('/home/0/movie/${movie.id}'),
-                      child: FadeIn(child: child),
-                    );
-                  }
-
-                  return Container(
-                    width: double.infinity,
-                    height: 225, // Altura aproximada del póster
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300], // Color de "hueso"
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  );
-                },
+              child: GestureDetector(
+                onTap: () => context.push('/home/0/movie/${movie.id}'),
+                child: FadeInImage(
+                  height: 220,
+                  fit: BoxFit.cover,
+                  placeholder: AssetImage('assets/loaders/bottle-loader.gif'),
+                  image: NetworkImage(movie.posterPath!),
+                ),
               ),
             ),
           ),

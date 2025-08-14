@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:app_flutter_the_movie/infrastructure/repositories/local_storage_repository_impl.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider_state.dart';
 import 'package:app_flutter_the_movie/presentation/providers/movies/movie_info_provider.dart';
 import 'package:app_flutter_the_movie/presentation/providers/storage/favorite_movies_repository.dart';

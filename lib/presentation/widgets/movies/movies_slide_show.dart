@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MoviesSlideShow extends StatelessWidget {
   final List<Movie> movies;
@@ -29,9 +30,6 @@ class MoviesSlideShow extends StatelessWidget {
           final movie = movies[index];
           return FadeInRight(child: _SlideMovie(movie: movie));
         },
-        // layout: SwiperLayout.STACK,
-        // itemWidth: 300,
-        // itemHeight: 200,
       ),
     );
   }
@@ -55,15 +53,13 @@ class _SlideMovie extends StatelessWidget {
         decoration: decoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            movie.posterPath!,
-            fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return FadeIn(child: child);
-              return DecoratedBox(
-                decoration: BoxDecoration(color: Colors.black12),
-              );
-            },
+          child: GestureDetector(
+            onTap: () => context.push('/home/0/movie/${movie.id}'),
+            child: FadeInImage(
+              fit: BoxFit.cover,
+              placeholder: AssetImage('assets/loaders/bottle-loader.gif'),
+              image: NetworkImage(movie.backdropPath!),
+            ),
           ),
         ),
       ),

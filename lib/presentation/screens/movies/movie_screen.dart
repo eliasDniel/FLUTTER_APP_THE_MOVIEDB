@@ -118,7 +118,7 @@ class _MovieDetails extends StatelessWidget {
                   margin: EdgeInsets.only(right: 10),
                   child: Chip(
                     label: Text(genre),
-                    backgroundColor: Colors.grey[200],
+                    // backgroundColor: Colors.grey[200],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),

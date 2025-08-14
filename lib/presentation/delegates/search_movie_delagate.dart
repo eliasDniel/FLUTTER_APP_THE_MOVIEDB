@@ -41,18 +41,72 @@ class SearchMovieDelagate extends SearchDelegate<Movie?> {
       stream: debouncedMovies.stream,
       initialData: initialMovies,
       builder: (context, snapshot) {
-        final movies = snapshot.data ?? [];
+        final List<Movie> movies = snapshot.data ?? [];
 
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (context, index) => _MovieSearchItem(
-            movie: movies[index],
-            movieSearchOntap: (context, movie) {
-              _clearStreams();
-              close(context, movie);
-            },
-          ),
-        );
+        return movies.isNotEmpty && query.isNotEmpty
+            ? ListView.builder(
+                itemCount: movies.length,
+                itemBuilder: (context, index) => _MovieSearchItem(
+                  movie: movies[index],
+                  movieSearchOntap: (context, movie) {
+                    _clearStreams();
+                    close(context, movie);
+                  },
+                ),
+              )
+            : movies.isEmpty && query.isNotEmpty
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.search_off_sharp,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 60,
+                    ),
+                    Text(
+                      'Ohh no!!',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    Text(
+                      'No se encontro ninguna pelicula',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    // SizedBox(height: 20,),
+                    // FilledButton.tonal(onPressed: () => context.go('/home/0'), child: Text('Empieza ya!'))
+                  ],
+                ),
+              )
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 60,
+                    ),
+                    Text(
+                      'Empieza ya!!',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    Text(
+                      'Busca las peliculas de tus preferencias',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    // SizedBox(height: 20,),
+                    // FilledButton.tonal(onPressed: () => context.go('/home/0'), child: Text('Empieza ya!'))
+                  ],
+                ),
+              );
       },
     );
   }
@@ -134,11 +188,11 @@ class _MovieSearchItem extends StatelessWidget {
               width: size.width * 0.2,
               child: ClipRRect(
                 borderRadius: BorderRadiusGeometry.circular(20),
-                child: Image.network(
-                  movie.posterPath!,
+                child: FadeInImage(
+                  height: 130,
                   fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) =>
-                      FadeIn(child: child),
+                  placeholder: AssetImage('assets/loaders/bottle-loader.gif'),
+                  image: NetworkImage(movie.posterPath!),
                 ),
               ),
             ),

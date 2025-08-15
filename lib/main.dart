@@ -5,13 +5,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'config/theme/app_theme.dart';
 
- // Importa hive_flutter
+// Importa hive_flutter
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Hive.initFlutter(); // Inicializa Hive aquí
   Hive.registerAdapter(MovieAdapter());
   runApp(ProviderScope(child: const MainApp()));
@@ -22,6 +24,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),

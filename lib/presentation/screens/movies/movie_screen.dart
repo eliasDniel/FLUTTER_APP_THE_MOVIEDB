@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:app_flutter_the_movie/config/helpers/human_formats.dart';
 import 'package:app_flutter_the_movie/presentation/providers/actores/actores_provider_state.dart';
 import 'package:app_flutter_the_movie/presentation/providers/movies/movie_info_provider.dart';
 import 'package:app_flutter_the_movie/presentation/providers/storage/favorite_movies_repository.dart';
 import 'package:app_flutter_the_movie/presentation/providers/storage/local_storage_provider.dart';
+import 'package:app_flutter_the_movie/presentation/widgets/movies/movie_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -78,35 +80,7 @@ class _MovieDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // * IMAGEN
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  movie.posterPath!,
-                  width: size.width * 0.3,
-                ),
-              ),
-              const SizedBox(width: 10),
-
-              // * TITULO
-              SizedBox(
-                width: (size.width - 40) * 0.7,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(movie.title, style: textStyle.titleLarge),
-                    Text(movie.overview),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        _TitleAndOverview(movie: movie, size: size, textStyle: textStyle),
         // * CATEGORIAS
         Padding(
           padding: EdgeInsetsGeometry.all(8),
@@ -133,6 +107,61 @@ class _MovieDetails extends StatelessWidget {
 
         SizedBox(height: 50),
       ],
+    );
+  }
+}
+
+class _TitleAndOverview extends StatelessWidget {
+  const _TitleAndOverview({
+    required this.movie,
+    required this.size,
+    required this.textStyle,
+  });
+
+  final Movie movie;
+  final Size size;
+  final TextTheme textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // * IMAGEN
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              movie.posterPath!,
+              width: size.width * 0.3,
+            ),
+          ),
+          const SizedBox(width: 10),
+    
+          // * TITULO
+          SizedBox(
+            width: (size.width - 40) * 0.7,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(movie.title, style: textStyle.titleLarge),
+                Text(movie.overview),
+                SizedBox(height: 10,),
+                MovieRating(voteAverage: movie.voteAverage),
+                Row(
+                  children: [
+                    Text('Estreno: ', style: TextStyle(fontWeight: FontWeight.bold),),
+                    SizedBox(width: 3,),
+                    Text(HumanFormats.shortDate(movie.releaseDate))
+                  ],
+                )
+
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

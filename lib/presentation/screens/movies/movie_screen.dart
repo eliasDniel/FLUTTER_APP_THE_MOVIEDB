@@ -132,13 +132,10 @@ class _TitleAndOverview extends StatelessWidget {
           // * IMAGEN
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              movie.posterPath!,
-              width: size.width * 0.3,
-            ),
+            child: Image.network(movie.posterPath!, width: size.width * 0.3),
           ),
           const SizedBox(width: 10),
-    
+
           // * TITULO
           SizedBox(
             width: (size.width - 40) * 0.7,
@@ -147,16 +144,18 @@ class _TitleAndOverview extends StatelessWidget {
               children: [
                 Text(movie.title, style: textStyle.titleLarge),
                 Text(movie.overview),
-                SizedBox(height: 10,),
+                SizedBox(height: 10),
                 MovieRating(voteAverage: movie.voteAverage),
                 Row(
                   children: [
-                    Text('Estreno: ', style: TextStyle(fontWeight: FontWeight.bold),),
-                    SizedBox(width: 3,),
-                    Text(HumanFormats.shortDate(movie.releaseDate))
+                    Text(
+                      'Estreno: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 3),
+                    Text(HumanFormats.shortDate(movie.releaseDate)),
                   ],
-                )
-
+                ),
               ],
             ),
           ),
@@ -230,6 +229,7 @@ class CustomSliverAppbar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isFvavoriteFuture = ref.watch(isFavoriteRepositoryProvider(movie.id));
+    final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
       centerTitle: false,
@@ -257,9 +257,14 @@ class CustomSliverAppbar extends ConsumerWidget {
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+        titlePadding: EdgeInsets.only(bottom: 0),
         centerTitle: false,
-
+        title: _CustomGradients(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.7, 1.0],
+          colors: [Colors.transparent, scaffoldBackgroundColor],
+        ),
         background: Stack(
           children: [
             SizedBox.expand(
@@ -273,12 +278,6 @@ class CustomSliverAppbar extends ConsumerWidget {
               ),
             ),
 
-            _CustomGradients(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.7, 2.0],
-              colors: [Colors.transparent, Colors.black87],
-            ),
 
             _CustomGradients(
               begin: Alignment.topRight,

@@ -1,6 +1,11 @@
+import 'dart:ffi';
+
 import 'package:app_flutter_the_movie/domain/datasources/movies_datasources.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
+import 'package:app_flutter_the_movie/domain/entities/video.dart';
+import 'package:app_flutter_the_movie/infrastructure/mappers/video_mapper.dart';
 import 'package:app_flutter_the_movie/infrastructure/models/moviedb/movie_details.dart';
+import 'package:app_flutter_the_movie/infrastructure/models/moviedb/movie_videos.dart';
 import 'package:app_flutter_the_movie/infrastructure/models/moviedb/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
@@ -84,5 +89,26 @@ class MoviedbDatasource extends MoviesDataSource {
     );
 
     return _jsonForMovies(response.data);
+  }
+
+  @override
+  Future<List<Movie>> getSimilarMovies(int movieId) async {
+    final response = await dio.get('/movie/$movieId/similar');
+
+    return _jsonForMovies(response.data);
+  }
+
+  @override
+  Future<List<Video>> getYoutubeVideosById(int movieId) async {
+    final response = await dio.get('/movie/$movieId/videos');
+    final movieVideoResponse = MoviedbVideosResponse.fromJson(response.data);
+    final videos = <Video>[];
+    for (var movieVideo in movieVideoResponse.results) {
+      if (movieVideo.site == "YouTube") {
+        final videosMovie = VideoMapper.moviedbVideoToEntity(movieVideo);
+        videos.add(videosMovie);
+      }
+    }
+    return videos;
   }
 }

@@ -1,3 +1,5 @@
+import 'package:app_flutter_the_movie/domain/entities/video.dart';
+
 import '../entities/movie.dart';
 
 abstract class MoviesRepository {
@@ -10,4 +12,10 @@ abstract class MoviesRepository {
   Future<Movie> getMovieById(String id);
     // * BUSCAR PELICULAS
   Future<List<Movie>> searchMovie(String query);
+
+    // * TRAER RECOMENDADOS
+  Future<List<Movie>> getSimilarMovies(int movieId);
+
+  // * TRAER VIDEOS
+  Future<List<Video>> getYoutubeVideosById(int movieId);
 }

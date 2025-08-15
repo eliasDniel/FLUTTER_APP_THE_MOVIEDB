@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/entities/movie.dart';
+import '../../widgets/movies/movie_similar.dart';
+import '../../widgets/videos/videos_from_movie.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const String routeName = 'movie-screen';
@@ -82,31 +84,49 @@ class _MovieDetails extends StatelessWidget {
       children: [
         _TitleAndOverview(movie: movie, size: size, textStyle: textStyle),
         // * CATEGORIAS
-        Padding(
-          padding: EdgeInsetsGeometry.all(8),
-          child: Wrap(
-            children: [
-              ...movie.genreIds.map((genre) {
-                return Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: Chip(
-                    label: Text(genre),
-                    // backgroundColor: Colors.grey[200],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                );
-              }),
-            ],
-          ),
-        ),
-
+        _Genres(movie: movie),
         // * ACTORES
         _ActorsByMovie(movieId: movie.id.toString()),
 
-        SizedBox(height: 50),
+        //* Videos de la película (si tiene)
+        VideosFromMovie(movieId: movie.id),
+
+        //* Películas similares
+        SimilarMovies(movieId: movie.id),
       ],
+    );
+  }
+}
+
+class _Genres extends StatelessWidget {
+  const _Genres({required this.movie});
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsGeometry.all(8),
+      child: SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.center,
+          children: [
+            ...movie.genreIds.map((genre) {
+              return Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Chip(
+                  label: Text(genre),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -173,7 +193,11 @@ class _ActorsByMovie extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final actorsByMovie = ref.watch(actorsByMovieProvider);
     if (actorsByMovie[movieId] == null) {
-      return Center(child: CircularProgressIndicator());
+      return Container(
+        height: 100,
+        margin: const EdgeInsets.only(bottom: 50),
+        child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
+      );
     }
     final actors = actorsByMovie[movieId]!;
     return SizedBox(
@@ -192,7 +216,15 @@ class _ActorsByMovie extends ConsumerWidget {
                 FadeInRight(
                   child: ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(20),
-                    child: Image.network(actor.profilePath),
+                    child: FadeInImage(
+                      height: 180,
+                      width: 135,
+                      fit: BoxFit.cover,
+                      placeholder: const AssetImage('assets/loaders/bottle-loader.gif'),
+                      image: NetworkImage(
+                        actor.profilePath,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -251,9 +283,6 @@ class CustomSliverAppbar extends ConsumerWidget {
             error: (_, __) => throw UnimplementedError(),
             loading: () => CircularProgressIndicator(),
           ),
-
-          // Icon(Icons.favorite_border_rounded),
-          // icon: Icon(Icons.favorite_rounded, color: Colors.red,),
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
@@ -277,7 +306,6 @@ class CustomSliverAppbar extends ConsumerWidget {
                 },
               ),
             ),
-
 
             _CustomGradients(
               begin: Alignment.topRight,

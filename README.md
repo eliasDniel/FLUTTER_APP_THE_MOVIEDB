@@ -1,6 +1,6 @@
 # App Flutter The Movie
 
-![App Logo](assets/images/logo.png)  
+
 > Aplicación Flutter para explorar información de películas utilizando The Movie Database API.
 
 ---

@@ -45,11 +45,14 @@ class _MovieMasonryState extends State<MovieMasonry> {
         crossAxisCount: 3,
         itemBuilder: (context, index) {
           if (index == 1) {
-            return Column(
-              children: [
-                SizedBox(height: 30),
-                MoviesPosterLink(movie: widget.movies[index]),
-              ],
+            return SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(height: 30),
+                  MoviesPosterLink(movie: widget.movies[index]),
+                ],
+              ),
             );
           }
           return MoviesPosterLink(movie: widget.movies[index]);

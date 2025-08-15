@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_flutter_the_movie/domain/datasources/movies_datasources.dart';
 import 'package:app_flutter_the_movie/domain/entities/movie.dart';
 import 'package:app_flutter_the_movie/domain/entities/video.dart';

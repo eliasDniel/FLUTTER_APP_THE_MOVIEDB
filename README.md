@@ -3,6 +3,9 @@
 
 > Aplicación Flutter para explorar información de películas utilizando The Movie Database API.
 
+
+![Descripción de la imagen](assets/image.png)
+
 ---
 
 ## Descripción
